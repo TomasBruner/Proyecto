@@ -53,7 +53,9 @@
     <Compile Include="Búsqueda.cs" />
     <Compile Include="Canción.cs" />
     <Compile Include="ChangePasswordEventArgs.cs" />
+    <Compile Include="Controllers\CancionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="CustomsEvenArgs\AgregarCancionEventArgs.cs" />
     <Compile Include="CustomsEvenArgs\LoginEventArgs.cs" />
     <Compile Include="CustomsEvenArgs\RegisterEventArgs.cs" />
     <Compile Include="AppForm.cs">

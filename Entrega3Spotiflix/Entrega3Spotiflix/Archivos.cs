@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Entrega3Spotiflix
 {
@@ -13,9 +14,18 @@ namespace Entrega3Spotiflix
         public static Dictionary<int, List<string>> lista_usuarios = new Dictionary<int, List<string>>();
         public static List<Película> películasApp = new List<Película>();
         public static List<Canción> cancionesApp = new List<Canción>();
+        public static Dictionary<int, List<string>> lista_canciones = new Dictionary<int, List<string>>();
         public static List<Playlist> playlists_Canciones = new List<Playlist>();
         public static List<Playlist> playlists_Películas = new List<Playlist>();
         private static List<Person> personasApp = new List<Person>();
+        public static List<Canción> CancionesApp
+        {
+            get => cancionesApp; set => cancionesApp = value;
+        }
+        public static Dictionary<int, List<string>> Lista_canciones
+        {
+            get => lista_canciones; set => lista_canciones = value;
+        }
         public static List<Person> PersonasApp
         {
             get => personasApp; set => personasApp = value;
@@ -55,6 +65,29 @@ namespace Entrega3Spotiflix
                 Lista_usuarios.Add(Lista_usuarios.Count + 1, data);
                 Usuario premium = new Usuario(data[0], data[1], data[2], data[3]); 
                 Usuarios.Add(premium);
+            }
+            return description;
+        }
+        // Metodo para agregar una nueva cancion, verificando ademas que no exista
+        public static string AddCancion(List<string> data)
+        {
+            string description = null;
+            foreach (Canción cancion in cancionesApp)
+            {
+                if (data[0] == cancion.titulo)
+                {
+                    description = "La canción ingresada ya existe";
+                    MessageBox.Show(description);
+                }
+            }
+            if (description == null)
+            {
+                Lista_canciones.Add(Lista_canciones.Count + 1, data);
+                Artista artista = new Artista(data[1], data[1], "", 0, "");
+                Album album = new Album("", data[2], artista, 0);
+                List<string> genero = new List<string>() { data[3] };
+                Canción cancion = new Canción(data[0], artista, album, genero, Convert.ToInt32(data[4]), Convert.ToInt32(data[5]), Convert.ToInt32(data[6]), Convert.ToInt32(data[7]), data[8], data[9], data[10]);
+                cancionesApp.Add(cancion);
             }
             return description;
         }

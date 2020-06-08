@@ -29,6 +29,9 @@ namespace Entrega3Spotiflix
         public delegate bool LoginEventHandler(object source, LoginEventArgs args);
         public event LoginEventHandler LoginButtonClicked;
         public event EventHandler<LoginEventArgs> UserChecked;
+        public delegate bool AgregarCancionEventHandler(object source, AgregarCancionEventArgs args);
+        public event AgregarCancionEventHandler AgregarCancionClicked;
+        public event EventHandler<AgregarCancionEventArgs> CancionChecked;
 
         public AppForm()
         {
@@ -45,7 +48,7 @@ namespace Entrega3Spotiflix
             string espacio = "3,78MB";
             genero_una_cerveza.Add("Cumbia");
             string url_una_cerveza = @"\una cerveza.mp3";
-            Canción Una_Cerveza = new Canción("Una cerveza", Ráfaga, Una_cerveza, genero_una_cerveza, 2016, reproducciones, Calificación, Avg_calificacion, duración1, resolución, espacio, url_una_cerveza);
+            Canción Una_Cerveza = new Canción("Una cerveza", Ráfaga, Una_cerveza, genero_una_cerveza, 2016, reproducciones, Avg_calificacion, duración1, resolución, espacio, url_una_cerveza);
             Archivos.cancionesApp.Add(Una_Cerveza);
 
             //Callaita-Bad Bunny
@@ -56,7 +59,7 @@ namespace Entrega3Spotiflix
             string espacio2 = "7,68MB";
             genero_una_cerveza.Add("Reggaeton");
             string url_callaita = @"\callaita.mp3";
-            Canción Callaita = new Canción("Callaita", Bad_Bunny, callaita, genero_callaita, 2019, reproducciones, Calificación, Avg_calificacion, duración2, resolución, espacio2, url_callaita);
+            Canción Callaita = new Canción("Callaita", Bad_Bunny, callaita, genero_callaita, 2019, reproducciones, Avg_calificacion, duración2, resolución, espacio2, url_callaita);
             Archivos.cancionesApp.Add(Callaita);
             IniciarSerializacion();
             panels.Add("EntradaPanel", panelEntrada);
@@ -67,6 +70,7 @@ namespace Entrega3Spotiflix
             panels.Add("CancionesPanel", panelCancciones);
             panels.Add("PelículasPanel", panelPelículas);
             panels.Add("BúsquedaPanel", panelBúsqueda);
+            panels.Add("AgregarCancionpanel", panelAgregarCancion);
             foreach (Usuario usuario in Archivos.Usuarios)
             {
                 if (usuario.Logeado == true)
@@ -155,6 +159,60 @@ namespace Entrega3Spotiflix
         public void setNameUser(string username)
         {
             textBoxUsernamePerfil.Text = username;
+        }
+        private void OnAgregarCancionClicked(string nombre, string artista, string album, string genero, string AñoPublicacion, string reproducciones, string avg_calificacion, string duracion, string resolucion, string espacio, string ruta)
+        {
+            if (nombre == "" || artista == "" || album == "" || duracion == "" || espacio == "" || Convert.ToString(resolucion) == "" || ruta == "" || genero == "")
+            {
+                labelFaltanDatosCancion.Text = "No han ingresado todos los datos";
+                labelFaltanDatosCancion.Visible = true;
+            }
+            else
+            {
+                bool result = AgregarCancionClicked(this, new AgregarCancionEventArgs() { Nombre = nombre, Artista = artista, Album = album, genero = genero, añoPublicacion = AñoPublicacion, Reproducciones = Convert.ToInt32(reproducciones), avg_calificacion = Convert.ToInt32(avg_calificacion), Duracion = duracion, Resolucion = resolucion, Espacio = espacio, URL = ruta });
+                if (!result)
+                {
+                    labelFaltanDatosCancion.Text = "Esta cancion ya existe";
+                    labelFaltanDatosCancion.Visible = true;
+                }
+                else
+                {
+                    labelFaltanDatosCancion.ResetText();
+                    labelFaltanDatosCancion.Visible = false;
+                    Serializacion();
+                    OnCancionChecked(nombre);
+                }
+            }
+        }
+        private void OnCancionChecked(string nombre)
+        {
+            if (CancionChecked != null)
+            {
+                CancionChecked(this, new AgregarCancionEventArgs() { Nombre = nombre });
+                textBoxNombreCancion.ResetText();
+                textBoxArtistaCancion.ResetText();
+                textBoxAlbumCancion.ResetText();
+                textBoxDuracionCancion.ResetText();
+                textBoxGeneroCancion.ResetText();
+                textBoxEspacioCancion.ResetText();
+                textBoxResoluciónCancion.ResetText();
+                labelFaltanDatosCancion.ResetText();
+                ; setNombreCancion(nombre);
+                foreach (Canción cancion in Archivos.cancionesApp)
+                {
+                    if (cancion.Titulo == nombre)
+                    {
+                        cancion.Agregada = true;
+                        Serializacion();
+                    }
+                }
+                stackPanels.Add(panels["MenuPanel"]);
+                ShowLastPanel();
+            }
+        }
+        public void setNombreCancion(string nombre)
+        {
+            textBoxNombreCancion.Text = nombre;
         }
         private void ShowLastPanel()
         {
@@ -650,7 +708,7 @@ namespace Entrega3Spotiflix
                     }
                     catch
                     {
-                        string sin_foto = "Foto_UnaCerveza.jpg";
+                        string sin_foto = "Sin_Imagen.jpg";
                         FotoCanciónMostrada.Image = Image.FromFile(sin_foto);
                         FotoCanciónMostrada.SizeMode = PictureBoxSizeMode.StretchImage;
                     }
@@ -759,14 +817,14 @@ namespace Entrega3Spotiflix
             {
                 if (valor == película.titulo)
                 {
-                    this.ruta = carpeta + película.Url;
+                    this.ruta = película.Url;
                 }
             }
             foreach (Canción canción in Archivos.cancionesApp)
             {
                 if (valor == canción.titulo)
                 {
-                    this.ruta = carpeta + canción.Url;
+                    this.ruta = canción.Url;
                 }
             }
         }
@@ -1258,6 +1316,60 @@ namespace Entrega3Spotiflix
             }
             comboBoxCalificaciónPelícula.Visible = false;
             buttonConfirmarCalificaciónPelícula.Visible = false;
+        }
+        string[] archivo, Ruta;
+
+        private void buttonVolverAgregarCancion_Click(object sender, EventArgs e)
+        {
+            stackPanels.Add(panels["MenuPanel"]);
+            ShowLastPanel();
+        }
+
+        private void buttonConfrimarAgregarCancion_Click(object sender, EventArgs e)
+        {
+            string nombre = textBoxNombreCancion.Text;
+            string artista = textBoxArtistaCancion.Text;
+            string album = textBoxAlbumCancion.Text;
+            string duracion = textBoxDuracionCancion.Text;
+            string genero = textBoxGeneroCancion.Text;
+            string espacio = textBoxEspacioCancion.Text;
+            string resolucion = textBoxResoluciónCancion.Text;
+            if (labelRutaCancion.Visible == true)
+            {
+                string ruta = labelRutaCancion.Text;
+                OnAgregarCancionClicked(nombre, artista, album, genero, "2016", "0", "0", duracion, resolucion, espacio, ruta);
+            }
+            else
+            {
+                labelDebeAgregarArchivoCancion.Text = "Debe ingresgar un archivo para subir la canción";
+                labelDebeAgregarArchivoCancion.Visible = true;
+            }
+        }
+
+        private void buttonIrAgregarCancion_Click(object sender, EventArgs e)
+        {
+            labelRutaCancion.Visible = false;
+            labelFaltanDatosCancion.Visible = false;
+            labelDebeAgregarArchivoCancion.Visible = false;
+            stackPanels.Add(panels["AgregarCancionpanel"]);
+            ShowLastPanel();
+        }
+
+        private void btnBuscarArchivoCancion_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                archivo = openFileDialog.SafeFileNames;
+                Ruta = openFileDialog.FileNames;
+
+                for (int i = 0; i < archivo.Length; i++)
+                {
+                    ruta = Ruta[i];
+                    labelRutaCancion.Text = Ruta[i];
+                    labelRutaCancion.Visible = true;
+                }
+            }
         }
     }
 }

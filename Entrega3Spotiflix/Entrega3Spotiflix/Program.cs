@@ -23,6 +23,7 @@ namespace Entrega3Spotiflix
             Application.SetCompatibleTextRenderingDefault(false);
             AppForm appform = new AppForm();
             UserController userController = new UserController(appform);
+            CancionController cancionController = new CancionController(appform);
             Application.Run(appform);
         }
     }
