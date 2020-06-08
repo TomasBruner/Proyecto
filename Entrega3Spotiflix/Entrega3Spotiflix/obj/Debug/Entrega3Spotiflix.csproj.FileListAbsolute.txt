@@ -1,0 +1,15 @@
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\bin\Debug\Entrega3Spotiflix.exe.config
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\bin\Debug\Entrega3Spotiflix.exe
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\bin\Debug\Entrega3Spotiflix.pdb
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.csprojAssemblyReference.cache
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.Properties.Resources.resources
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.csproj.GenerateResource.cache
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.csproj.CoreCompileInputs.cache
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.exe
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.pdb
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.AppForm.resources
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\bin\Debug\Interop.WMPLib.dll
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Interop.WMPLib.dll
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega3Spotiflix\Entrega3Spotiflix\obj\Debug\Entrega3Spotiflix.csproj.ResolveComReference.cache

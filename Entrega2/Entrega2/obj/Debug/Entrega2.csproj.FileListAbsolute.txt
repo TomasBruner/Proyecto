@@ -1,0 +1,6 @@
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\obj\Debug\Entrega2.csprojAssemblyReference.cache
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\obj\Debug\Entrega2.csproj.CoreCompileInputs.cache
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\bin\Debug\Entrega2.exe
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\bin\Debug\Entrega2.pdb
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\obj\Debug\Entrega2.exe
+C:\Users\nacho\OneDrive\Desktop\proyecto-grupo-7\Entrega2\Entrega2\obj\Debug\Entrega2.pdb
