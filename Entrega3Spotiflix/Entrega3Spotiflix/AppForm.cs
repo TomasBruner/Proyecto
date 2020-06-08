@@ -36,7 +36,7 @@ namespace Entrega3Spotiflix
             string resolución = "256kbps";
             int reproducciones = 0;
             int Avg_calificacion = 0; //CANCION Y PELICULA
-            List<double> Calificación = new List<double>(); //CANCION Y PELICULA
+            List<int> Calificación = new List<int>(); //CANCION Y PELICULA
             //Una Cerveza-Ráfaga
             int duración1 = 240;
             Artista Ráfaga = new Artista("Ráfaga", "Ráfaga", "Masculino", 25, "Argentina");
@@ -45,7 +45,7 @@ namespace Entrega3Spotiflix
             string espacio = "3,78MB";
             genero_una_cerveza.Add("Cumbia");
             string url_una_cerveza = @"\una cerveza.mp3";
-            Canción Una_Cerveza = new Canción("Una cerveza", Ráfaga, Una_cerveza, genero_una_cerveza, 2016, reproducciones, Avg_calificacion, duración1, resolución, espacio, url_una_cerveza);
+            Canción Una_Cerveza = new Canción("Una cerveza", Ráfaga, Una_cerveza, genero_una_cerveza, 2016, reproducciones, Calificación, Avg_calificacion, duración1, resolución, espacio, url_una_cerveza);
             Archivos.cancionesApp.Add(Una_Cerveza);
 
             //Callaita-Bad Bunny
@@ -56,7 +56,7 @@ namespace Entrega3Spotiflix
             string espacio2 = "7,68MB";
             genero_una_cerveza.Add("Reggaeton");
             string url_callaita = @"\callaita.mp3";
-            Canción Callaita = new Canción("Callaita", Bad_Bunny, callaita, genero_callaita, 2019, reproducciones, Avg_calificacion, duración2, resolución, espacio2, url_callaita);
+            Canción Callaita = new Canción("Callaita", Bad_Bunny, callaita, genero_callaita, 2019, reproducciones, Calificación, Avg_calificacion, duración2, resolución, espacio2, url_callaita);
             Archivos.cancionesApp.Add(Callaita);
             IniciarSerializacion();
             panels.Add("EntradaPanel", panelEntrada);
@@ -189,7 +189,7 @@ namespace Entrega3Spotiflix
             registerViewUserInput.ResetText();
             registerViewEmailInput.ResetText();
             registerViewPassInput.ResetText();
-            registerViewTipoInput.ResetText();
+            comboBoxTipoUsuario.ResetText();
             stackPanels.Add(panels["RegisterPanel"]);
             ShowLastPanel();
         }
@@ -252,7 +252,7 @@ namespace Entrega3Spotiflix
             string username = registerViewUserInput.Text;
             string email = registerViewEmailInput.Text;
             string pass = registerViewPassInput.Text;
-            string tipo_usuario = registerViewTipoInput.Text;
+            string tipo_usuario = comboBoxTipoUsuario.SelectedItem.ToString();
             OnRegisterClicked(username, email, pass, tipo_usuario);
         }
 
@@ -587,7 +587,7 @@ namespace Entrega3Spotiflix
 
         private void panelCancciones_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         private void buttonGoVerCanciones_Click(object sender, EventArgs e)
@@ -596,7 +596,8 @@ namespace Entrega3Spotiflix
             buttonAgregarCancionAPlaylist.Visible = false;
             buttonReproducir.Visible = false;
             buttonEvaluar.Visible = false;
-            buttonInfoCanción.Visible = false;
+            comboBoxCalificación.Visible = false;
+            buttonConfirmarCalificación.Visible = false;
             CanciónSeleccionada.Visible = false;
             panel1.Visible = false;
             axWindowsMediaPlayer1.Visible = false;
@@ -636,7 +637,6 @@ namespace Entrega3Spotiflix
             buttonAgregarCancionAPlaylist.Visible = true;
             buttonReproducir.Visible = true;
             buttonEvaluar.Visible = true;
-            buttonInfoCanción.Visible = true;
             CanciónSeleccionada.Visible = true;
             CanciónSeleccionada.Text = listViewCanciones.SelectedItems[0].SubItems[0].Text;
             foreach (Canción canción in Archivos.cancionesApp)
@@ -656,6 +656,7 @@ namespace Entrega3Spotiflix
                     }
                     AlbumCanciónSeleccionada.Text = canción.album.Nombre;
                     ArtistaCanciónSeleccionada.Text = canción.artista.Apellido;
+                    DuraciónCanciónSeleccionada.Text = canción.duración.ToString();
                     ReproduccionesCanciónSeleccionada.Text = canción.reproducciones.ToString();
                     CalificaciónCanciónSeleccionada.Text = canción.Avg_calificacion.ToString();
 
@@ -715,7 +716,7 @@ namespace Entrega3Spotiflix
                     TituloPelículaSeleccionada.Text = película.director.Nombre;
                     AñoPelículaSeleccionada.Text = película.añoPublicacion.ToString();
                     DuraciónPelículaSeleccionada.Text = película.duracion.ToString();
-                    CalificaciónPelículaSeleccionada.Text = película.avg_Ranking.ToString();
+                    CalificaciónPelículaSeleccionada.Text = película.Avg_calificación.ToString();
 
                 }
             }
@@ -726,6 +727,8 @@ namespace Entrega3Spotiflix
             panel2.Visible = false;
             axWindowsMediaPlayer2.Visible = false;
             FotoPelícula.Visible = false;
+            comboBoxCalificaciónPelícula.Visible = false;
+            buttonConfirmarCalificaciónPelícula.Visible = false;
             buttonAgregarPelículaAPlaylist.Visible = false;
             buttonReproducirPelícula.Visible = false;
             buttonEvaluarPelícula.Visible = false;
@@ -968,12 +971,11 @@ namespace Entrega3Spotiflix
                             }
                             listViewBúsqueda.Groups.Add(Películas);
                         }
-                        if (resultado.Count != 0)
+                        if (resultado.Count == 0)
                         {
-                            continue;
+                            labelErrorBúsqueda.Visible = true;
+                            labelErrorBúsqueda.Text = "No se encontraron resultados";
                         }
-                        labelErrorBúsqueda.Visible = true;
-                        labelErrorBúsqueda.Text = "No se encontraron resultados";
                     }
                 }
                 if (criterio2 == "Categoría")
@@ -1102,7 +1104,7 @@ namespace Entrega3Spotiflix
             string selección1 = comboBoxCriterio1.SelectedItem.ToString();
             labelFiltroBúsqueda.Visible = true;
             string selección2;
-            
+
             if (selección1 == "Canciones")
             {
                 selección2 = comboBoxCriterioCanción.SelectedItem.ToString();
@@ -1153,6 +1155,109 @@ namespace Entrega3Spotiflix
             labelErrorBúsqueda.Visible = false;
             labelErrorBúsqueda.ResetText();
             textBoxFiltroBúsqueda.ResetText();
+        }
+
+        private void axWindowsMediaPlayer2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonConfirmarCalificación_Click(object sender, EventArgs e)
+        {
+            string nota1 = comboBoxCalificación.SelectedItem.ToString();
+            if (nota1 == "")
+            {
+                MessageBox.Show("Por favor seleccione una nota antes de evaluar");
+            }
+            else
+            {
+                foreach (Canción canción in Archivos.cancionesApp)
+                {
+                    if (canción.titulo == CanciónSeleccionada.Text)
+                    {
+                        int nota2 = Convert.ToInt32(nota1);
+                        canción.calificación.Add(nota2);
+                        string Canción = "Canción";
+                        Rankear(canción.titulo, canción.calificación, Canción);
+                        MessageBox.Show("Se ha calificado la canción");
+                        CalificaciónCanciónSeleccionada.Text = canción.Avg_calificacion.ToString();
+                    }
+                }
+            }
+            comboBoxCalificación.Visible = false;
+            buttonConfirmarCalificación.Visible = false;
+        }
+
+        private void buttonEvaluar_Click(object sender, EventArgs e)
+        {
+            comboBoxCalificación.ResetText();
+            comboBoxCalificación.Visible = true;
+            buttonConfirmarCalificación.Visible = true;
+        }
+        public void Rankear(string nombre, List<int> calificaciones, string tipo)
+        {
+            if (tipo == "Canción")
+            {
+                foreach (Canción canción in Archivos.cancionesApp)
+                {
+                    if (nombre == canción.titulo)
+                    {
+                        int sum = calificaciones.Sum();
+                        int valor = (sum / calificaciones.Count());
+                        canción.Avg_calificacion = valor;
+                    }
+                }
+            }
+            else if (tipo == "Película")
+            {
+                foreach (Película película in Archivos.películasApp)
+                {
+                    if (nombre == película.titulo)
+                    {
+                        int sum = calificaciones.Sum();
+                        int valor = (sum / calificaciones.Count());
+                        película.Avg_Ranking = valor;
+                    }
+                }
+            }
+        }
+
+        private void buttonEvaluarPelícul_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonEvaluarPelícula_Click(object sender, EventArgs e)
+        {
+            comboBoxCalificaciónPelícula.ResetText();
+            comboBoxCalificaciónPelícula.Visible = true;
+            buttonConfirmarCalificaciónPelícula.Visible = true;
+        }
+
+        private void buttonConfirmarCalificaciónPelícula_Click(object sender, EventArgs e)
+        {
+            string nota1 = comboBoxCalificaciónPelícula.SelectedItem.ToString();
+            if (nota1 == "")
+            {
+                MessageBox.Show("Por favor seleccione una nota antes de evaluar");
+            }
+            else
+            {
+                foreach (Película película in Archivos.películasApp)
+                {
+                    if (película.titulo == PelículaSeleccionada.Text)
+                    {
+                        int nota2 = Convert.ToInt32(nota1);
+                        película.calificación.Add(nota2);
+                        string Película = "Película";
+                        Rankear(película.titulo, película.calificación, Película);
+                        MessageBox.Show("Se ha calificado la película");
+                        CalificaciónPelículaSeleccionada.Text = película.Avg_calificación.ToString();
+                    }
+                }
+            }
+            comboBoxCalificaciónPelícula.Visible = false;
+            buttonConfirmarCalificaciónPelícula.Visible = false;
         }
     }
 }

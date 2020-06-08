@@ -19,7 +19,7 @@ namespace Entrega3Spotiflix
         public string estudio;
         public string letra;
         public string premios;
-        public List<int> calificacion;
+        public List<int> calificación;
         public int Avg_calificacion;
         public int añoPublicacion;
         public int reproducciones;
@@ -33,7 +33,7 @@ namespace Entrega3Spotiflix
         {
             Console.WriteLine("Título" + titulo + "\nArtista: " + artista.Nombre + "\nCalificación: " + Avg_calificacion + "\nAlbum: " + album.Nombre + "\nGenero: " + genero + "\nNúmero de reproducciones: " + reproducciones + "\nAño de publicación: " + añoPublicacion);
         }
-        public Canción(string titulo, Artista artista, Album album, List<string>genero, int añoPublicacion, int reproducciones, int Avg_calificacion, int duración, string resolución, string espacio, string Url)
+        public Canción(string titulo, Artista artista, Album album, List<string>genero, int añoPublicacion, int reproducciones, List<int> calificación, int Avg_calificacion, int duración, string resolución, string espacio, string Url)
         {
             this.titulo = titulo;
             this.artista = artista;
@@ -41,6 +41,7 @@ namespace Entrega3Spotiflix
             this.genero = genero;
             this.añoPublicacion = añoPublicacion;
             this.reproducciones = reproducciones;
+            this.calificación = calificación;
             this.Avg_calificacion = Avg_calificacion;
             this.duración = duración;
             this.resolución = resolución;
